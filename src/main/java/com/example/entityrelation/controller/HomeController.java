@@ -1,10 +1,13 @@
 package com.example.entityrelation.controller;
 
+import com.example.entityrelation.entity.Book;
 import com.example.entityrelation.entity.Laptop;
 import com.example.entityrelation.entity.Student;
 import com.example.entityrelation.repository.EntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class HomeController {
@@ -17,12 +20,26 @@ public class HomeController {
         try {
 
 
+            // Student reference or FK in Laptop table
+            Laptop inputLaptop = inputStd.getLaptop();
+            inputLaptop.setStudent(inputStd);
 
+            // OR
+            //inputStd.getLaptop().setStudent(inputStd);
+
+            // Laptop reference or FK in Student table
             //inputStd.setLaptop(inputStd.getLaptop());
 
-            inputStd.getLaptop().setStudent(inputStd);
 
-            this._repository.save(inputStd);
+            List<Book> bookList = inputStd.getBookList();
+            for(Book bk : bookList)
+            {
+                bk.setStdnt_id(inputStd);
+            }
+
+
+            Student resp=    this._repository.save(inputStd);
+            System.out.println("END");
         }
         catch (Exception ex)
         {

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Student {
 
@@ -14,8 +17,27 @@ public class Student {
     private String name;
     private String standard;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "laptop_id")
+    public Student(int id, String name, String standard, List<Book> bookList, Laptop laptop) {
+        this.id = id;
+        this.name = name;
+        this.standard = standard;
+        this.bookList = bookList;
+        this.laptop = laptop;
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "stdnt_id")
+    private List<Book> bookList = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL , mappedBy = "studentCol")
+    //@JoinColumn(name = "laptop_id" , referencedColumnName = "lap_id")
     //@OneToOne(cascade = CascadeType.ALL)
     //@OneToOne
     //@JoinColumn(name = "laptop_id")

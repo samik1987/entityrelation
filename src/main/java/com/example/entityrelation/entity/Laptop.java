@@ -11,32 +11,32 @@ import lombok.Setter;
 public class Laptop {
 
     @Id
-    private int id;
+    private int lap_id;
     private String model;
 
-      //@OneToOne
-      @OneToOne(mappedBy = "laptop")
-//    @JoinColumn(name = "student_id")
+      @OneToOne
+      //@OneToOne(mappedBy = "laptop")
+      @JoinColumn(name = "std_id")
       @JsonIgnore
-      private Student student;
+      private Student studentCol;
 
     public Laptop(int id, String model
             , Student student
     ) {
-        this.id = id;
+        this.lap_id = id;
         this.model = model;
-        this.student = student;
+        this.studentCol = student;
     }
 
     public Laptop() {
     }
 
     public int getId() {
-        return id;
+        return lap_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.lap_id = id;
     }
 
     public String getModel() {
@@ -48,10 +48,10 @@ public class Laptop {
     }
 
     public Student getStudent() {
-        return student;
+        return studentCol;
     }
 
     public void setStudent(Student student) {
-        this.student = student;
+        this.studentCol = student;
     }
 }
